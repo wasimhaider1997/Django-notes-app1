@@ -1,10 +1,17 @@
+# Use an official Python runtime as a parent image
 FROM python:3.9
 
-WORKDIR /app/backend
+# Set the working directory inside the container
+WORKDIR /app
 
-COPY requirements.txt /app/backend
-RUN pip install -r requirements.txt
+# Copy the current directory contents into the container at /app
+COPY . /app
 
-COPY . /app/backend
+# Install required dependencies
+RUN pip install --no-cache-dir -r requirements.txt
+
+# Expose the application port
 EXPOSE 8000
-CMD python /app/backend/mange.py runserver 0.0.0.0:8000
+
+# Command to run the application
+CMD ["python", "manage.py", "runserver", "0.0.0.0:8000"]
